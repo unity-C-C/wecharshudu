@@ -1,7 +1,7 @@
 const app = getApp()
 
 
-
+var numxx=false;
 var lis=new Array()//81个子格对象数组
 
 var map=[
@@ -381,7 +381,26 @@ this.setData({jiulis:app.gamedata.jiujiudata})
 
 numx:function(e){
 
- if(xuanzhongbool==0){
+console.log(numxx);
+numxx=!numxx;
+
+},
+
+jiugongge:function(e){
+ console.log(e);
+  for(var i=0;i<81;++i){
+    if(app.gamedata.jiujiudata[i].xuanzhong==true&&i!=(e.currentTarget.dataset.id-1)){
+      app.gamedata.jiujiudata[i].xuanzhong=false
+    }else if(i==(e.currentTarget.dataset.id-1)){
+app.gamedata.jiujiudata[e.currentTarget.dataset.id-1].xuanzhong=!app.gamedata.jiujiudata[e.currentTarget.dataset.id-1].xuanzhong;
+    }
+  }
+  
+
+  this.setData({jiulis:app.gamedata.jiujiudata});
+
+if(numxx){
+   if(xuanzhongbool==0){
       for(var i=0;i<app.gamedata.jiujiudata.length;++i){
         if(app.gamedata.jiujiudata[i].xuanzhong&&app.gamedata.jiujiudata[i].yuanshengdata==true){
           
@@ -394,6 +413,11 @@ numx:function(e){
       }
 
       //重复显示为红 //原生数字显示为红 候选数删除
+      for(var i=0;i<app.gamedata.jiujiudata.length;++i){
+        app.gamedata.jiujiudata[i].biaojihong=false;
+
+      }
+
       app.panding0(app.gamedata.jiujiudata)
       //console.log(app.gamedata.jiujiudata)
   }
@@ -401,14 +425,121 @@ numx:function(e){
 
   
 this.setData({jiulis:app.gamedata.jiujiudata})
+console.log(numxx);
+numxx=false;
+}
 
-},
-
-jiugongge:function(e){
 
 },
 
 queding:function(e){
+
+var pan=false;
+//先判断符不符合规则
+      //重复显示为红 //原生数字显示为红 候选数删除
+      for(var i=0;i<app.gamedata.jiujiudata.length;++i){
+        app.gamedata.jiujiudata[i].biaojihong=false;
+
+      }
+
+      app.panding0(app.gamedata.jiujiudata)
+
+      for(var i=0;i<app.gamedata.jiujiudata.length;++i){
+        if(app.gamedata.jiujiudata[i].biaojihong){
+
+          //调用窗口
+          wx.showToast({
+            title:"不符合规则",
+            duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+            mask: false,//是否显示透明蒙层，防止触摸穿透，默认：false 
+            success:function(){}
+          });
+
+          pan=true;
+          break;
+        }
+      }
+
+//判断是否有解
+
+    app.gamedata.qiujie=[];
+    app.gamedata.jiujiudata = app.panding3(app.gamedata.jiujiudata);
+    var jiujiucopy =JSON.parse(JSON.stringify(app.gamedata.jiujiudata));
+    console.log(jiujiucopy);
+    app.panding6(jiujiucopy);
+    console.log(app.gamedata.qiujie.length);
+    if(app.gamedata.qiujie.length<=0){
+ 
+      if(!pan){
+
+          wx.showToast({
+            title:"数独无解",
+            duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+            mask: false,//是否显示透明蒙层，防止触摸穿透，默认：false 
+            success:function(){}
+          });
+          pan=true;
+      }
+        
+    }else if(app.gamedata.qiujie.length>1){
+
+      if(!pan){
+           wx.showToast({
+            title:"数独多解",
+            duration: 2000,//提示的延迟时间，单位毫秒，默认：1500 
+            mask: false,//是否显示透明蒙层，防止触摸穿透，默认：false 
+            success:function(){}
+          });
+          pan=true;
+      }
+       
+    }else{
+      app.gamedata.dangqiantimu=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));
+
+      app.gamedata.indexbutt=2;
+      app.gamedata.qiujiecopy=app.gamedata.qiujie[0];
+
+      var numss=0;
+      for(var i=0;i<app.gamedata.jiujiudata;++i){
+        if(app.gamedata.jiujiudata[i].date==""){
+          numss++;
+        }
+      }
+
+      if(numss<10){
+          app.gamedata.nandu="难度:容易";
+      }else if(numss>=10&&numss<20){
+        app.gamedata.nandu="难度:一般";
+      }else if(numss>=20&&numss<30){
+        app.gamedata.nandu="难度:困难"
+      }else if(numss>=30&&numss<40){
+        app.gamedata.nandu="难度:专家"
+      }else{
+        app.gamedata.nandu="难度:大师"
+      }
+
+    wx.navigateTo({
+      url:'../index/index2/index1',
+      
+      success:function(){
+        
+        app.gamedata.indexbutt=2;
+      },
+      fail:function(){
+        console.log("3");
+      },
+      complete:function(){
+        console.log("2");
+      }
+    })
+
+
+    }
+
+    for(var i=0;i<app.gamedata.jiujiudata.length;++i){
+      app.gamedata.jiujiudata[i].shujuchi=[];
+    }
+
 
 },
 

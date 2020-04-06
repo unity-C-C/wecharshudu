@@ -171,6 +171,40 @@ for(var i=0;i<81;++i){
     }.bind(this),1000);
 
 }
+else if(app.gamedata.indexbutt==2){
+
+
+
+    
+    app.gamedata.jiujiudata = app.gamedata.dangqiantimu;
+
+    //this.setData({jiulis:app.gamedata.jiujiudata});
+    this.setData({wxx:app.globalData.wx});
+
+
+    
+
+    app.draw(app.gamedata.jiujiudata);
+
+    console.log(app.gamedata.jiujiudata);    
+    chongzhi=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));//深度克隆
+    app.gamedata.dangqiantimu=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));//深度克隆
+    //console.log(app.gamedata.jiujiudata);
+    
+    this.setData({jiulis:app.gamedata.jiujiudata});
+
+    clearInterval(app.gamedata.timeout);
+    app.gamedata.timeout=null;
+    app.gamedata.timenum=0;
+
+    app.gamedata.timeout = setInterval(function(){
+
+      app.gamedata.timenum+=1;
+      this.setData({jishiqi:"计时器:"+app.gamedata.timenum});
+
+    }.bind(this),1000);
+
+}
     
     
   },
