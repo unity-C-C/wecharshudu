@@ -102,6 +102,6 @@
         <view bindtap="numx" data-id="{{10}}" style="left:150rpx;position: relative;">X</view>
   </view>
 
-  <button bindtap="queding",style="left:200rpx;bottom:{{750/wxx*50}}rpx;position: relative;">确定</button>
+  <button bindtap="queding" style="left:200rpx;bottom:{{750/wxx*50}}rpx;position: relative;">确定</button>
 
 </view>
