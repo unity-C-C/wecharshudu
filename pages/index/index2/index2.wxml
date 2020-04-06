@@ -1,0 +1,56 @@
+<wxs src="index1.wxs" module="fun" />
+<view  style="flex-direction:column;">
+<!-- 上面布局-->
+  <!--<view class="view0 flex-wrp" style="flex-direction:row;">
+    <view class="bc_green td" bindtap="caidanvi" style="width:{{view0}}rpx">{{nandu}}</view>
+    <view class="bc_red td" bindtap="caidanvi" style="width:{{view0}}rpx">{{jishiqi}}</view>
+    <view class="bc_blue td" bindtap="caidanvi" style="width:{{view0}}rpx">{{caidan}}</view>
+  </view>-->
+<!--下拉框菜单 -->
+  <!--<view class="view0 flex-wrp {{showhid?'show':'hid'}}" style="flex-direction:column;z-index:2">
+    <view class="bc_blue1 td" bindtap="caidanvi1" style="width:{{view0}}rpx;left:{{view0*2}}rpx">{{candan[0]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" style="width:{{view0}}rpx;left:{{view0*2}}rpx">{{candan[1]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" style="width:{{view0}}rpx;left:{{view0*2}}rpx">{{candan[2]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" style="width:{{view0}}rpx;left:{{view0*2}}rpx">{{candan[3]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" style="width:{{view0}}rpx;left:{{view0*2}}rpx">{{candan[4]}}</view>
+  </view>-->
+  
+<!--九宫格-->
+ <view wx:for="{{jiulis}}"   class="jiugg flex-wrp" style="flex-direction:column;z-index:-1;top:{{750/wxx*60}}rpx;left:40rpx;">
+     <view class="{{(item.id)%9==0?'column':'row'}}" >
+         <view bindtap="jiugongge123" data-index="{{item.id}}" style="left:{{item.id}}rpx;top:{{item.id*(50+5)}}rpx;position:relative;">{{index}}:{{item.id}}</view>
+     </view>
+ </view>
+
+  <!--工具栏-->
+   <view class="flex-wrp" style="flex-direction:row;bottom:{{750/wxx*140}}rpx;left:190rpx;position: absolute;">
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:0rpx;" bindtap="xuan">
+          <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/xuan.png"/>
+        </view>
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:30rpx;" bindtap="xpc">
+          <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/xpc.png"/>
+        </view>
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:60rpx;" bindtap="ch">
+          <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/ch.png"/>
+        </view>
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:90rpx;" bindtap="ts">
+          <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/ts.png"/>
+        </view>
+  </view>
+
+  <!--数据池-->
+   <view class="flex-wrp;" style="flex-direction:row;bottom:{{750/wxx*80}}rpx;left:150rpx;position: absolute;">
+        <view bindtap="num1" style="left:60rpx;position: relative;">1</view>
+        <view bindtap="num2" style="left:70rpx;position: relative;">2</view>
+        <view bindtap="num3" style="left:80rpx;position: relative;">3</view>
+        <view bindtap="num4" style="left:90rpx;position: relative;">4</view>
+        <view bindtap="num5" style="left:100rpx;position: relative;">5</view>
+        <view bindtap="num6" style="left:110rpx;position: relative;">6</view>
+        <view bindtap="num7" style="left:120rpx;position: relative;">7</view>
+        <view bindtap="num8" style="left:130rpx;position: relative;">8</view>
+        <view bindtap="num9" style="left:140rpx;position: relative;">9</view>
+  </view>
+
+
+
+</view>

@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view class="container">
+  <view>
+    <button bindtap="newgame">新游戏</button>
+    <button bindtap="gameold">继续上局</button>
+    <button bindtap="fleergame">自定义局面</button>
+  </view>
+</view>
