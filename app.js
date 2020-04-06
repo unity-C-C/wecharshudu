@@ -65,7 +65,11 @@ App({
     jiujiudataold:[],//记录上一步的方块集,
     shujuchi:[1,2,3,4,5,6,7,8,9],
     qiujie:[],//求解的计算
-    qiujiecopy:null
+    qiujiecopy:null,
+    dangqiantimu:null, //当前题目
+    indexbutt:0,//默认是点击新游戏按钮
+    timeout:null,//计时器
+    timenum:0
   },
 
 

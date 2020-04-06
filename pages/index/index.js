@@ -4,6 +4,9 @@ const app = getApp()
 
 Page({
   
+  data:{
+      zhi:app.gamedata.dangqiantimu
+  },
   //绑定点击事件
   newgame:function(){
     console.log("0");
@@ -13,6 +16,7 @@ Page({
       success (res) {
         console.log(res.tapIndex)
         app.gamedata.nandu=List[res.tapIndex];//记录玩家选择的难度
+        app.gamedata.indexbutt=0;
           wx.navigateTo({
           url:'../index/index1/index1',
           success:function(){
@@ -36,10 +40,13 @@ Page({
   },
 
   gameold:function(){
+
+if(app.gamedata.dangqiantimu!=null){
     wx.navigateTo({
       url:'../index/index1/index1',
       success:function(){
         console.log("1");
+        app.gamedata.indexbutt=1;
       },
       fail:function(){
         console.log("3");
@@ -48,14 +55,18 @@ Page({
         console.log("2");
       }
     })
+}
+    
     
   },
 
   fleergame:function(){
     wx.navigateTo({
       url:'../index/index2/index2',
+      
       success:function(){
         console.log("1");
+        app.gamedata.indexbutt=2;
       },
       fail:function(){
         console.log("3");
@@ -73,6 +84,7 @@ Page({
         app.globalData.hg=res.windowHeight;
       }
     })
+    
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -81,5 +93,10 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+
+  onShow:function(){
+    console.log("zhi")
+    this.setData({zhi:app.gamedata.dangqiantimu})
   }
 })

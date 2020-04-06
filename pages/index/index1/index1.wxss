@@ -5,7 +5,7 @@
 .bc_blue {background: blue; height: 50px;position: relative;left: 0px;top: 0px;}
 .td {line-height:50px;}
 .flex-wrp {display: flex;}
-.bc_blue1 {background: blue; height: 50px;position: relative;top: 0px;}
+.bc_blue1 {background:blue; height: 50px;position: relative;top: 0px;}
 .show {display: block;}
 .hid {display: none;}
 

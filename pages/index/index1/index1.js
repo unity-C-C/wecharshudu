@@ -77,7 +77,9 @@ Page({
     this.setData({'view0':750/app.globalData.wx*app.globalData.wx/3});
     this.setData({'nandu':app.gamedata.nandu});
 
-    for(var i=0;i<81;++i){
+if(app.gamedata.indexbutt==0){
+
+for(var i=0;i<81;++i){
       var li = app.jiujiudata();
       li.date="";
       li.yuanshengdata=false;
@@ -118,10 +120,58 @@ Page({
 
     console.log(app.gamedata.jiujiudata);    
     chongzhi=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));//深度克隆
-
+    app.gamedata.dangqiantimu=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));//深度克隆
     //console.log(app.gamedata.jiujiudata);
     
     this.setData({jiulis:app.gamedata.jiujiudata});
+     
+    clearInterval(app.gamedata.timeout);
+    app.gamedata.timeout=null;
+    app.gamedata.timenum=0;
+
+    app.gamedata.timeout = setInterval(function(){
+
+      app.gamedata.timenum+=1;
+      this.setData({jishiqi:"计时器:"+app.gamedata.timenum});
+
+    }.bind(this),1000);
+
+
+}else if(app.gamedata.indexbutt==1){
+
+
+
+    
+    app.gamedata.jiujiudata = app.gamedata.dangqiantimu;
+
+    //this.setData({jiulis:app.gamedata.jiujiudata});
+    this.setData({wxx:app.globalData.wx});
+
+
+    
+
+    app.draw(app.gamedata.jiujiudata);
+
+    console.log(app.gamedata.jiujiudata);    
+    chongzhi=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));//深度克隆
+    app.gamedata.dangqiantimu=JSON.parse(JSON.stringify(app.gamedata.jiujiudata));//深度克隆
+    //console.log(app.gamedata.jiujiudata);
+    
+    this.setData({jiulis:app.gamedata.jiujiudata});
+
+    clearInterval(app.gamedata.timeout);
+    app.gamedata.timeout=null;
+   
+
+    app.gamedata.timeout = setInterval(function(){
+
+      app.gamedata.timenum+=1;
+      this.setData({jishiqi:"计时器:"+app.gamedata.timenum});
+
+    }.bind(this),1000);
+
+}
+    
     
   },
 
@@ -148,6 +198,7 @@ chongzhi=[];
 
 app.gamedata.jiujiudata=[];
 app.gamedata.jiujiudataold=[];
+app.gamedata.qiujie=[];
 
 },
 
@@ -907,10 +958,13 @@ caidanvi1:function(e){
        app.gamedata.jiujiudata=app.gamedata.qiujiecopy;
        this.setData({jiulis:app.gamedata.jiujiudata})
   }else if(e.currentTarget.dataset.id==4){//重置游戏
-       app.gamedata.jiujiudata=this.chongzhi;
+       app.gamedata.jiujiudata=JSON.parse(JSON.stringify(app.gamedata.dangqiantimu));//深度克隆
        this.setData({jiulis:app.gamedata.jiujiudata})
   }else if(e.currentTarget.dataset.id==5){//分享小程序
-
+       
+        wx.showShareMenu({
+          withShareTicket:true
+        })
   }
 
 },

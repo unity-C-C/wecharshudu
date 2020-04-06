@@ -5,12 +5,12 @@
 .bc_blue {background: blue; height: 50px;position: relative;left: 0px;top: 0px;}
 .td {line-height:50px;}
 .flex-wrp {display: flex;}
-.bc_blue1 {background: blue; height: 50px;position: relative;top: 0px;}
+.bc_blue1 {background:blue; height: 50px;position: relative;top: 0px;}
 .show {display: block;}
 .hid {display: none;}
 
-.jiugg{position: absolute;}
-.jiubuju{position: relative;background:cadetblue;}
+.jiugg{left:40rpx;position: absolute;}
+.jiubuju{position: relative;}
 
 .row{flex-direction:row;display: flex;}
 .column{flex-direction:column;display: flex;}

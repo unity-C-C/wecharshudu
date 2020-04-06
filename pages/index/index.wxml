@@ -2,7 +2,12 @@
 <view class="container">
   <view>
     <button bindtap="newgame">新游戏</button>
-    <button bindtap="gameold">继续上局</button>
+    <view wx:if="{{zhi==null}}">
+      <button bindtap="gameold" style="background:slategrey">继续上局</button>
+    </view>
+    <view wx:if="{{zhi!=null}}">
+      <button bindtap="gameold" style="background:white">继续上局</button>
+    </view>
     <button bindtap="fleergame">自定义局面</button>
   </view>
 </view>
