@@ -476,7 +476,7 @@ panding5:function(jiujius){
   return panduan
 },
 
-//递归调用 求解
+//递归调用 随机生成全部完整数独
 //先找唯一 确定其值 删除当前行 列 宫 重新找唯一 如果寻找删除过程中是无解 则回到上一步 在当前
 panding6:function(jiujius){
 
@@ -484,7 +484,8 @@ panding6:function(jiujius){
       //console.log(jiujius)
       //先判断是否无解
 
-      //test
+
+      //这个是只找一个数独 不管是不是唯一解
       if(this.gamedata.qiujie.length==1){
         return -1
       }
@@ -542,11 +543,79 @@ panding6:function(jiujius){
       }
 
 //push求解的值 并返回0
-    console.log(jiujius);
+    //console.log(jiujius);
     this.gamedata.qiujie.push(JSON.parse(JSON.stringify(jiujius)));
     return -1;
 },
 
+
+//递归调用 挖洞计算
+//先找唯一 确定其值 删除当前行 列 宫 重新找唯一 如果寻找删除过程中是无解 则回到上一步 在当前
+panding7:function(jiujius){
+
+     
+      //这个是找解 判断是不是唯一还是==2 多余的不找了 浪费效率
+      if(this.gamedata.qiujie.length==2){
+        return -1
+      }
+
+      for(var i=0;i<jiujius.length;++i){
+        if(jiujius[i].date==""&&jiujius[i].shujuchi.length<=0){
+          //console.log("无解-1")
+            return -1
+        }
+      }
+
+      //找唯一数独
+      for(var i=0;i<jiujius.length;++i){
+        if(jiujius[i].shujuchi.length==1){
+            var copyjiujius = JSON.parse(JSON.stringify(jiujius))
+            copyjiujius[i].date=copyjiujius[i].shujuchi[0].date
+            copyjiujius[i].shujuchi=[]
+
+            copyjiujius=this.panding3(copyjiujius)
+            if(this.panding6(copyjiujius)==-1){
+              return -1
+            }
+
+        }
+      }
+
+      //没有唯一数独 也没有无解 存在多解
+      for(var i=0;i<jiujius.length;++i){
+         if(jiujius[i].shujuchi.length>1){
+           //var pp1=false
+
+            for(var j=0;j<jiujius[i].shujuchi.length;++j){
+
+              var copyjiujius = JSON.parse(JSON.stringify(jiujius))
+              copyjiujius[i].date=copyjiujius[i].shujuchi[j].date
+              copyjiujius[i].shujuchi=[]
+
+              copyjiujius=this.panding3(copyjiujius)
+              if(this.panding6(copyjiujius)==-1){
+                 //console.log("多解 0")
+                 //pp1=true
+                 continue //这里不能用return 
+              }
+
+            }
+            /*
+            if(pp1){
+              return -1
+            }*/
+            return -1
+
+
+         }
+
+      }
+
+//push求解的值 并返回0
+    //console.log(jiujius);
+    this.gamedata.qiujie.push(JSON.parse(JSON.stringify(jiujius)));
+    return -1;
+},
 
 
 //map数据显示到界面上
@@ -620,7 +689,7 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
      if(this.gamedata.qiujie.length<=0){
        //无解
 
-       /*
+       
       this.gamedata.qiujie=[];
 
         var nan =0;
@@ -656,13 +725,13 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
           }
 
           //测试有没有唯一解 这里测试生成的数独有唯一解 将唯一解报存 这样在游戏中不需要再次计算唯一解了
-          //先测试解 判断解是不是唯一解 是 填入一些唯一解。否则 是无解重置；多解 加值 按照其中一种答案的数独值开始加 直到解唯一
+          //先测试解 判断解是不是唯一解 是 进行挖空算法  否则 是无解重置；多解 默认找第一个生成数独 进行挖动 //后面是之前的想法 效率不高——按照其中一种答案的数独值开始加 直到解唯一
 
         jiujiuscopy=JSON.parse(JSON.stringify(jiujius)) //深度拷贝
-        */
+        
 
-        console.log("无解")
-        break
+        //console.log("无解")
+        
      }else if(this.gamedata.qiujie.length==1){//唯一解
        console.log("唯一解")
        console.log(this.gamedata.qiujie)
@@ -670,10 +739,13 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
        break;
      }else if(this.gamedata.qiujie.length>1){//多解
         //默认按照第一个解开始加
+        /*
         console.log("多解答案:")
-        console.log(this.gamedata.qiujie)
+        console.log(this.gamedata.qiujie)*/
         jiujius=this.gamedata.qiujie[0]
-        break
+        break;
+
+        
      }
 
 
