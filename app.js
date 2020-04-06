@@ -486,7 +486,7 @@ panding6:function(jiujius){
 
 
       //这个是只找一个数独 不管是不是唯一解
-      if(this.gamedata.qiujie.length==1){
+      if(this.gamedata.qiujie.length==2){
         return -1
       }
 
@@ -735,7 +735,7 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
      }else if(this.gamedata.qiujie.length==1){//唯一解
        //console.log("唯一解")
        //console.log(this.gamedata.qiujie)
-       jiujius=JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
+       //jiujius=JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
        break;
      }else if(this.gamedata.qiujie.length>1){//多解
         //默认按照第一个解开始加
@@ -757,13 +757,15 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
 
           var jjiujiuscopy = JSON.parse(JSON.stringify(jiujius));
           jjiujiuscopy[rand].date="";
+          jjiujiuscopy=this.panding3(jjiujiuscopy);
           this.panding7(jjiujiuscopy);
 
           if(this.gamedata.qiujie.length<=0){
-
+              console.log("<=0")
           }else if(this.gamedata.qiujie.length>1){
-
+              console.log(">1")
           }else{
+            console.log("==1")
             jiujius[rand].date="";
             nums--;
           }
@@ -773,7 +775,15 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
           }
 
         }
+
+        //再跳出当前循环
         
+        if(nums<=0){
+          break;
+        }
+
+
+
      }
 
 
