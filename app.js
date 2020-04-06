@@ -64,7 +64,8 @@ App({
     jiujiudata:[],//方块集 ---保存新局的和自定义局面  以便于上一局按钮调用
     jiujiudataold:[],//记录上一步的方块集,
     shujuchi:[1,2,3,4,5,6,7,8,9],
-    qiujie:[]//求解的计算
+    qiujie:[],//求解的计算
+    qiujiecopy:null
   },
 
 
@@ -403,7 +404,7 @@ panding3:function(jiujiudatas){
 },
 
 //一键清楚候选数
-panding5:function(jiujiudatas){
+panding8:function(jiujiudatas){
    for(var i=0;i<jiujiudatas.length;++i){
      if(jiujiudatas[i].shujuchi.length>0){
        jiujiudatas[i].shujuchi=[]
@@ -735,22 +736,20 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
      }else if(this.gamedata.qiujie.length==1){//唯一解
        //console.log("唯一解")
        //console.log(this.gamedata.qiujie)
-       //jiujius=JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
+       this.gamedata.qiujiecopy = JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
        break;
      }else if(this.gamedata.qiujie.length>1){//多解
         //默认按照第一个解开始加
         /*
         console.log("多解答案:")
         console.log(this.gamedata.qiujie)*/
+        this.gamedata.qiujiecopy = JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
         jiujius=JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
        
         //进行挖洞算法
         var nums =0;
-        if(nandu==5){
-          nums=nandu*2;
-        }else{
-          nums=nandu;
-        }
+        nums =nandu*3;
+
         while(true){
           this.gamedata.qiujie=[];
           var rand =  parseInt(Math.random()*81);
@@ -765,7 +764,7 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
           }else if(this.gamedata.qiujie.length>1){
               console.log(">1")
           }else{
-            console.log("==1")
+            console.log(nums)
             jiujius[rand].date="";
             nums--;
           }

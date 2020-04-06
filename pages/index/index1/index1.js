@@ -44,8 +44,9 @@ Page({
    wxx:0,//像素
 
    imgw:50,//工具栏图片宽高
-   xuanzhongbool:xuanzhongbool//工具栏选中按钮
+   xuanzhongbool:xuanzhongbool,//工具栏选中按钮
    
+   news_id:12
   },
 
 //菜单显示和隐藏
@@ -59,6 +60,16 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     //console.log(750/app.globalData.wx*app.globalData.wx/3);
     //console.log(app.globalData.hg);
+
+    if(options.url){
+ 
+      let url = decodeURIComponent(options.url);
+ 
+      wx.navigateTo({
+        url
+      })
+ 
+    }
 
     //重置
     this.czdata();
@@ -890,12 +901,14 @@ caidanvi1:function(e){
       app.gamedata.jiujiudata = app.panding3(app.gamedata.jiujiudata)
       this.setData({jiulis:app.gamedata.jiujiudata})
   }else if(e.currentTarget.dataset.id==2){//一键清除候选数
-       app.gamedata.jiujiudata = app.panding5(app.gamedata.jiujiudata)
+       app.gamedata.jiujiudata = app.panding8(app.gamedata.jiujiudata)
        this.setData({jiulis:app.gamedata.jiujiudata})
   }else if(e.currentTarget.dataset.id==3){//一键查看答案
-
+       app.gamedata.jiujiudata=app.gamedata.qiujiecopy;
+       this.setData({jiulis:app.gamedata.jiujiudata})
   }else if(e.currentTarget.dataset.id==4){//重置游戏
-
+       app.gamedata.jiujiudata=this.chongzhi;
+       this.setData({jiulis:app.gamedata.jiujiudata})
   }else if(e.currentTarget.dataset.id==5){//分享小程序
 
   }
@@ -914,6 +927,19 @@ biaojihongfalse:function(){
 },
 
 
+/**
+   * 用户点击右上角分享
+   */
+ onShareAppMessage: function () {
+ 
+    let url = encodeURIComponent('/packageNews/pages/index/index1/index1?news_id=' + this.data.news_id);
+ 
+    return {
+      title: "热点详情",
+      path:`/pages/index/index1/index1?url=${url}` 
+    }
+ 
+},
 
   onReady:function(){
     // 页面渲染完成
