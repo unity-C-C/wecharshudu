@@ -96,10 +96,10 @@ Page({
         app.createmap(app.gamedata.jiujiudata,25);
       }break;
       case "难度:专家":{
-        app.createmap(app.gamedata.jiujiudata,35);
+        app.createmap(app.gamedata.jiujiudata,30);
       }break;
       case "难度:大师":{
-        app.createmap(app.gamedata.jiujiudata,45);
+        app.createmap(app.gamedata.jiujiudata,35);
       }break;
     }
 

@@ -733,18 +733,46 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
         //console.log("无解")
         
      }else if(this.gamedata.qiujie.length==1){//唯一解
-       console.log("唯一解")
-       console.log(this.gamedata.qiujie)
-       jiujius=this.gamedata.qiujie[0]
+       //console.log("唯一解")
+       //console.log(this.gamedata.qiujie)
+       jiujius=JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
        break;
      }else if(this.gamedata.qiujie.length>1){//多解
         //默认按照第一个解开始加
         /*
         console.log("多解答案:")
         console.log(this.gamedata.qiujie)*/
-        jiujius=this.gamedata.qiujie[0]
-        break;
+        jiujius=JSON.parse(JSON.stringify(this.gamedata.qiujie[0]))
+       
+        //进行挖洞算法
+        var nums =0;
+        if(nandu==5){
+          nums=nandu*2;
+        }else{
+          nums=nandu;
+        }
+        while(true){
+          this.gamedata.qiujie=[];
+          var rand =  parseInt(Math.random()*81);
 
+          var jjiujiuscopy = JSON.parse(JSON.stringify(jiujius));
+          jjiujiuscopy[rand].date="";
+          this.panding7(jjiujiuscopy);
+
+          if(this.gamedata.qiujie.length<=0){
+
+          }else if(this.gamedata.qiujie.length>1){
+
+          }else{
+            jiujius[rand].date="";
+            nums--;
+          }
+
+          if(nums<=0){
+            break;
+          }
+
+        }
         
      }
 
@@ -752,16 +780,8 @@ createmap:function(jiujius,nandu){//通过难度来选择地图数据的个数�
    }
    
 
-    //test
-    /*
-    console.log("test");
-    for(var i=0;i<9;++i){
-      for(var j=0;j<9;++j){
-        console.log(map[i][j]);
-      }
-    }
-    */
 
+   
     
   //赋值给jiujiudata
   this.gamedata.jiujiudata=jiujius;
