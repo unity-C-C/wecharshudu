@@ -61,6 +61,7 @@ if(app.gamedata.dangqiantimu!=null){
   },
 
   fleergame:function(){
+    app.gamedata.indexbutt=2;
     wx.navigateTo({
       url:'../index/index1/index1',
       

@@ -4,13 +4,13 @@
     <view class="posiimg">
       <image src="../../pages/img/0000.png" class="img"></image>
     </view>
-    <button bindtap="newgame" class="button">新游戏</button>
+    <button catchtap="newgame" class="button">新游戏</button>
     <view wx:if="{{zhi==null}}">
-      <button bindtap="gameold" style="color:slategrey" class="button">继续上局</button>
+      <button catchtap="gameold" style="color:slategrey" class="button">继续上局</button>
     </view>
     <view wx:if="{{zhi!=null}}">
-      <button bindtap="gameold" style="color:black" class="button">继续上局</button>
+      <button catchtap="gameold" style="color:black" class="button">继续上局</button>
     </view>
-    <button bindtap="fleergame" class="button">自定义局面</button>
+    <button catchtap="fleergame" class="button">自定义局面</button>
   
 </view>

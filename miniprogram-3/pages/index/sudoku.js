@@ -94,7 +94,7 @@ Sudoku.prototype = {
                 case 5:
                     console.log('创建数独初盘-大师！');
                     this.generateAnswerGird();
-                    this.generatePuzzle(5);
+                    this.generatePuzzle(4);
                     break;
                 default:
                     console.log('难度等级输入错误！');

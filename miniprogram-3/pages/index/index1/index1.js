@@ -37,7 +37,7 @@ Page({
    jishiqi:"计时器:",
    caidan:"菜单",
    view0:0,
-   candan:["一键计算候选数","一键清除候选数","查看答案","重置游戏","分享本局"],
+   candan:["一键计算候选数","单格计算候选数","一键清除候选数","查看答案","重置游戏","分享本局"],
    showhid:false,//菜单显示和隐藏
    jiulis:[],//81个子格对象数组
 
@@ -297,7 +297,7 @@ xuan:function(e){
 //橡皮擦
 xpc:function(e){
   
-  {
+  if(xuanzhong_id!=-1){
       if(xuanzhong_id!=-1&&(x.gird[parseInt(xuanzhong_id/9)][parseInt(xuanzhong_id%9)].biaojihong!=0
           &&x.gird[parseInt(xuanzhong_id/9)][parseInt(xuanzhong_id%9)].biaojihong!=2)
           &&x.gird[parseInt(xuanzhong_id/9)][parseInt(xuanzhong_id%9)].shujuchi.length<=0){
@@ -319,6 +319,12 @@ xpc:function(e){
         //xuanzhong_id=-1;
         app.gamedata.jiujiudata=x.gird;
         this.setData({jiulis:app.gamedata.jiujiudata});
+  }else{
+    wx.showToast({
+      title:"没有选中格子",
+      icon:"none",
+      duration:2000
+    })
   }
 
     
@@ -1156,11 +1162,12 @@ victory:function(){
       icon: 'success',
       duration: 2000,
       success:function(e){
-
+        
         app.gamedata.dangqiantimu=null;
         xuanzhongbool=0;
-
-        wx.navigateTo({
+        Selfdetermination=2;
+        app.gamedata.indexbutt=0;
+        wx.redirectTo({
           url:'../index',
           
           success:function(){
@@ -1208,7 +1215,11 @@ jiugongge:function(e){
   }else if(x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].biaojihong==1){
     x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].biaojihong=1;
     x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].xuanzhong=!x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].xuanzhong;
-    xuanzhong_id=e.currentTarget.dataset.id;
+    if(x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].xuanzhong){
+      xuanzhong_id=e.currentTarget.dataset.id;
+    }else{
+      xuanzhong_id=-1;
+    }
     
   }else if(x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].biaojihong==2){
     x.gird[parseInt(e.currentTarget.dataset.id/9)][parseInt(e.currentTarget.dataset.id%9)].biaojihong=2;
@@ -1299,6 +1310,48 @@ caidanvi1:function(e){
         wx.showShareMenu({
           withShareTicket:true
         })
+  }else if(e.currentTarget.dataset.id==6){//单格计算候选数
+      var vool=false;
+      if(xuanzhong_id!=-1){
+        for(var i=0;i<9;++i){
+          for(var j=0;j<9;++j){
+            if(x.gird[i][j].xuanzhong&&x.gird[i][j].id==xuanzhong_id){
+               vool=true;
+            }
+          }
+        }
+      }
+
+      if(vool){
+        //计算候选数
+        x.initCand();
+        x.candsfun();
+        for(var i=0;i<9;++i){
+          for(var j=0;j<9;++j){
+
+            if(x.gird[i][j].id!=xuanzhong_id){
+              x.gird[i][j].shujuchi=[];
+            }else if(x.gird[i][j].id==xuanzhong_id){
+
+            }
+
+          }
+
+        }
+        app.gamedata.jiujiudata = x.gird;
+        console.log(x.gird);
+        this.setData({jiulis:app.gamedata.jiujiudata})
+
+      }
+
+      if(xuanzhong_id==-1||vool==false){
+          wx.showToast({
+            title:"没有选中格子",
+            icon:"none",
+            duration:2000
+          })
+      }
+
   }
 
 },
@@ -1378,6 +1431,9 @@ biaojihongfalse:function(){
 
     }else if(Selfdetermination==1){
       app.gamedata.dangqiantimu=null;
+    }else if(Selfdetermination==2){
+      app.gamedata.dangqiantimu=null;
+      Selfdetermination=0;
     }
 
     clearInterval(app.gamedata.victorytime);
