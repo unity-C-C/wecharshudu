@@ -19,7 +19,7 @@
   <view class="view0 flex-wrp {{showhid?'show':'hid'}}" style="flex-direction:column;z-index:2">
     <view class="bc_blue1 td" bindtap="caidanvi1" data-id="1" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[0]}}</view>
     <view class="bc_blue1 td" bindtap="caidanvi1" data-id="6" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[1]}}</view>
-    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="2" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[3]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="2" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[2]}}</view>
     <view class="bc_blue1 td" bindtap="caidanvi1" data-id="3" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[3]}}</view>
     <view class="bc_blue1 td" bindtap="caidanvi1" data-id="4" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[4]}}</view>
     <view class="bc_blue1 td" bindtap="caidanvi1" data-id="5" style="width:{{view0}}rpx;left:{{view0*2}}rpx">
