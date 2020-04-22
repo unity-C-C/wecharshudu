@@ -1,0 +1,9 @@
+var intvalue=function(a){
+
+  return parseInt(a);
+
+}
+
+module.exports = {
+  intvalue: intvalue
+};

@@ -1,0 +1,482 @@
+<wxs src="index1.wxs" module="fun" />
+<view  style="flex-direction:column;" bindtap="caidanvi2">
+<!-- 上面布局-->
+  <view class="view0 flex-wrp" style="flex-direction:row;">
+      <view wx:if="{{Selfdetermination==0}}" class="view0 flex-wrp" style="flex-direction:row;">
+             <view class="bc_green td"  style="width:{{view0}}rpx;text-align: center;background-color:white;">{{nandu}}</view>
+            <view class="bc_red td"  style="width:{{view0}}rpx;text-align: center;background-color:white;">{{jishiqi}}</view>
+            <view class="bc_blue td" catchtap="caidanvi" style="width:{{view0}}rpx;text-align: right;background-color:white;">{{caidan}}</view>
+            
+      </view>
+      <view wx:if="{{Selfdetermination==1}}" class="view0 flex-wrp" style="flex-direction:row;">
+             <view class="bc_green td"  style="width:{{view0}}rpx;text-align: center;background-color:lightslategray;">{{nandu}}</view>
+            <view class="bc_red td"  style="width:{{view0}}rpx;text-align: center;background-color:lightslategray;">{{jishiqi}}</view>
+            <view class="bc_blue td" catchtap="caidanvi" style="width:{{view0}}rpx;text-align: right;background-color:lightslategray;">{{caidan}}</view>
+            
+      </view>
+  </view>
+<!--下拉框菜单 -->
+  <view class="view0 flex-wrp {{showhid?'show':'hid'}}" style="flex-direction:column;z-index:2">
+    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="1" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[0]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="2" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[1]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="3" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[2]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="4" style="width:{{view0}}rpx;left:{{view0*2}}rpx;text-align: center;">{{candan[3]}}</view>
+    <view class="bc_blue1 td" bindtap="caidanvi1" data-id="5" style="width:{{view0}}rpx;left:{{view0*2}}rpx">
+    <button plain='true' open-type='share'  style="width:{{view0}}rpx;height:40px;border:none;font-weight:inherit;">{{candan[4]}}</button>
+    </view>
+  </view>
+  
+<view class="backcolor" style="position:absolute;width:{{9*jw+6*gg0+2*gg1+4}}rpx;height:{{9*jw+6*gg0+2*gg1+4}}rpx;top:{{750/wxx*60+jw+gg0-2}}rpx;left:{{40-2}}rpx;"></view>
+<!--九宫格-->
+<view wx:for="{{jiulis}}" wx:for-item="item1">
+     <view wx:for="{{item1}}" wx:for-item="item" class="jiugg flex-wrp" style="flex-direction:column;z-index:-1;top:{{750/wxx*60}}rpx;">
+     <view class="{{(item.id)%9==0?'column':'row'}}">
+        <!--<view wx:if="{{item.yuanshengdata==true}}">--><!--这里是判定是不是原生数据还是0（候选数）-->
+              <!--工具栏没选择-->
+              
+              <view wx:if="{{xuanzhongbool==0&&item.xuanzhong==true}}"><!--工具栏为选中状态、鼠标点击方块也是选中状态则背景改变-->
+                    
+                     <view wx:if="{{item.shujuchi.length>0}}">
+                                <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:aqua;">
+                              
+                                    <view wx:for="{{item.shujuchi}}" wx:for-item="items" class="flex-wrp" style="flex-direction:column;z-index:0;position: absolute;">
+                                          <view class="{{(items.id)%3==0?'column':'row'}}">
+                                                <view wx:if="{{items.biaojihong==1}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:black;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                                <view wx:else="{{items.biaojihong==2}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:red;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                        </view>
+                                  </view>
+                              </view>
+                       
+                    </view>
+
+                    <view wx:else="{{item.shujuchi.length<=0}}">
+                            <view wx:if="{{item.biaojihong==2}}"><!--原生不符合规则-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                            </view>
+                            <view wx:elif="{{item.biaojihong==3}}"><!--非原生不符合规则-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                           </view>
+                              <view wx:elif="{{item.biaojihong==0}}"><!--原生-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                           </view>
+                              <view wx:elif="{{item.biaojihong==1}}"><!--填数-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                              </view>
+                    </view>
+
+
+                    <!--
+                        <view wx:if="{{item.biaojihong==true}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:red;">
+                              {{item.date}}</view>
+                        </view>
+                        <view wx:elif="{{item.biaojihong==false}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:#898785;">
+                              {{item.date}}</view>
+                        </view>-->
+                    
+              </view>
+              <view wx:elif="{{xuanzhongbool==0&&item.xuanzhong==false}}">
+
+
+                      <view wx:if="{{item.shujuchi.length>0}}">
+                                <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:white;">
+                              
+                                    <view wx:for="{{item.shujuchi}}" wx:for-item="items" class="flex-wrp" style="flex-direction:column;z-index:0;position: absolute;">
+                                          <view class="{{(items.id)%3==0?'column':'row'}}">
+                                                <view wx:if="{{items.biaojihong==1}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:black;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                                <view wx:else="{{items.biaojihong==2}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:red;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                        </view>
+                                  </view>
+                              </view>
+                       
+                    </view>
+
+                    <view wx:else="{{item.shujuchi.length<=0}}">
+                           <view wx:if="{{item.biaojihong==2}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:red;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                            <view wx:elif="{{item.biaojihong==3}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:red;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                              <view wx:elif="{{item.biaojihong==0}}"><!--原生-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:white;">
+                                  {{item.value}}</view>
+                              </view>
+                              <view wx:elif="{{item.biaojihong==1}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                    </view>
+
+
+
+
+
+                    <!--<view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:cadetblue;">{{item.date}}</view>-->
+
+              <!-->
+                       <view wx:if="{{item.biaojihong==true}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:red;">{{item.date}}</view>
+                       </view>
+                      <view wx:elif="{{item.biaojihong==false}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:cadetblue;">{{item.date}}</view>
+                      </view>-->
+              </view>
+      
+              <!--标记-->
+              
+             <view wx:if="{{xuanzhongbool==1&&item.xuanzhong==true}}"><!--工具栏为选中状态、鼠标点击方块也是选中状态则背景改变-->
+                    
+                     <view wx:if="{{item.shujuchi.length>0}}">
+                                <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:aqua;">
+                              
+                                    <view wx:for="{{item.shujuchi}}" wx:for-item="items" class="flex-wrp" style="flex-direction:column;z-index:0;position: absolute;">
+                                          <view class="{{(items.id)%3==0?'column':'row'}}">
+                                                <view wx:if="{{items.biaojihong==1}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:black;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                                <view wx:else="{{items.biaojihong==2}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:red;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                        </view>
+                                  </view>
+                              </view>
+                       
+                    </view>
+
+                    <view wx:else="{{item.shujuchi.length<=0}}">
+                            <view wx:if="{{item.biaojihong==2}}"><!--原生不符合规则-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                            </view>
+                            <view wx:elif="{{item.biaojihong==3}}"><!--非原生不符合规则-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                           </view>
+                              <view wx:elif="{{item.biaojihong==0}}"><!--原生-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                           </view>
+                              <view wx:elif="{{item.biaojihong==1}}"><!--填数-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                              </view>
+                    </view>
+
+
+                    <!--
+                        <view wx:if="{{item.biaojihong==true}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:red;">
+                              {{item.date}}</view>
+                        </view>
+                        <view wx:elif="{{item.biaojihong==false}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:#898785;">
+                              {{item.date}}</view>
+                        </view>-->
+                    
+              </view>
+              <view wx:elif="{{xuanzhongbool==1&&item.xuanzhong==false}}">
+
+
+                      <view wx:if="{{item.shujuchi.length>0}}">
+                                <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:white;">
+                              
+                                    <view wx:for="{{item.shujuchi}}" wx:for-item="items" class="flex-wrp" style="flex-direction:column;z-index:0;position: absolute;">
+                                          <view class="{{(items.id)%3==0?'column':'row'}}">
+                                                <view wx:if="{{items.biaojihong==1}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:black;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                                <view wx:else="{{items.biaojihong==2}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:red;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                        </view>
+                                  </view>
+                              </view>
+                       
+                    </view>
+
+                    <view wx:else="{{item.shujuchi.length<=0}}">
+                           <view wx:if="{{item.biaojihong==2}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:red;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                            <view wx:elif="{{item.biaojihong==3}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:red;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                              <view wx:elif="{{item.biaojihong==0}}"><!--原生-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:white;">
+                                  {{item.value}}</view>
+                              </view>
+                              <view wx:elif="{{item.biaojihong==1}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                    </view>
+
+
+
+
+
+                    <!--<view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:cadetblue;">{{item.date}}</view>-->
+
+              <!-->
+                       <view wx:if="{{item.biaojihong==true}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:red;">{{item.date}}</view>
+                       </view>
+                      <view wx:elif="{{item.biaojihong==false}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:cadetblue;">{{item.date}}</view>
+                      </view>-->
+              </view>
+
+
+              <!--查看答案-->
+              
+             <view wx:if="{{xuanzhongbool==6&&item.xuanzhong==true}}"><!--工具栏为选中状态、鼠标点击方块也是选中状态则背景改变-->
+                    
+                     <view wx:if="{{item.shujuchi.length>0}}">
+                                <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:aqua;">
+                              
+                                    <view wx:for="{{item.shujuchi}}" wx:for-item="items" class="flex-wrp" style="flex-direction:column;z-index:0;position: absolute;">
+                                          <view class="{{(items.id)%3==0?'column':'row'}}">
+                                                <view wx:if="{{items.biaojihong==1}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:black;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                                <view wx:else="{{items.biaojihong==2}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:red;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                        </view>
+                                  </view>
+                              </view>
+                       
+                    </view>
+
+                    <view wx:else="{{item.shujuchi.length<=0}}">
+                            <view wx:if="{{item.biaojihong==2}}"><!--原生不符合规则-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                            </view>
+                            <view wx:elif="{{item.biaojihong==3}}"><!--非原生不符合规则-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                           </view>
+                              <view wx:elif="{{item.biaojihong==0}}"><!--原生-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                           </view>
+                              <view wx:elif="{{item.biaojihong==1}}"><!--填数-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:aqua;">
+                                  {{item.value}}</view>
+                              </view>
+                    </view>
+
+
+                    <!--
+                        <view wx:if="{{item.biaojihong==true}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:red;">
+                              {{item.date}}</view>
+                        </view>
+                        <view wx:elif="{{item.biaojihong==false}}">
+                              <view class="jiubuju" catchtap="jiugongge" data-id="{{item.idvalue}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:#898785;">
+                              {{item.date}}</view>
+                        </view>-->
+                    
+              </view>
+              <view wx:elif="{{xuanzhongbool==6&&item.xuanzhong==false}}">
+
+
+                      <view wx:if="{{item.shujuchi.length>0}}">
+                                <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;background-color:white;">
+                              
+                                    <view wx:for="{{item.shujuchi}}" wx:for-item="items" class="flex-wrp" style="flex-direction:column;z-index:0;position: absolute;">
+                                          <view class="{{(items.id)%3==0?'column':'row'}}">
+                                                <view wx:if="{{items.biaojihong==1}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:black;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                                <view wx:else="{{items.biaojihong==2}}">
+                                                      <view class="jiubuju" style="top:{{fun.intvalue(items.id/3)*(jh/3)}}rpx;left:{{fun.intvalue(items.id%3)*(jw/3)}}rpx;width:{{jw/3-2}}rpx;height:{{jh/3-2}}rpx;text-align:center;color:red;background-color:white;font-size:16rpx;">{{items.value}}</view>
+                                                </view>
+                                        </view>
+                                  </view>
+                              </view>
+                       
+                    </view>
+
+                    <view wx:else="{{item.shujuchi.length<=0}}">
+                           <view wx:if="{{item.biaojihong==2}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:red;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                            <view wx:elif="{{item.biaojihong==3}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:red;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                              <view wx:elif="{{item.biaojihong==0}}"><!--原生-->
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;font-weight:bold;line-height:{{jh}}rpx;color:black;background-color:white;">
+                                  {{item.value}}</view>
+                              </view>
+                              <view wx:elif="{{item.biaojihong==1}}">
+                                  <view class="jiubuju" bindtap="jiugongge" data-id="{{item.id}}" style="top:{{((fun.intvalue(item.id/9))-fun.intvalue((fun.intvalue(item.id/9))/3))*(jw+gg0)+fun.intvalue((fun.intvalue(item.id/9))/3)*(jw+gg1) +jw+gg0}}rpx;left:{{(item.id%9-fun.intvalue(item.id%9/3))*(jw+gg0)+fun.intvalue(item.id%9/3)*(jw+gg1)}}rpx;width:{{jw}}rpx;height:{{jh}}rpx;text-align:center;line-height:{{jh}}rpx;color:black;background-color:white;">
+                                  {{item.value}}</view>
+                            </view>
+                    </view>
+
+
+
+
+              </view>
+
+              
+
+       
+
+       </view>
+     </view>
+ </view>
+
+
+<view class="backcolor" style="position:absolute;width:{{9*jw+6*gg0+2*gg1+4}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6*2+5}}rpx;top:{{750/wxx*60+jw+gg0+9*jh+6*gg0+2*gg1}}rpx;left:{{40-2}}rpx;"></view>
+
+
+ <view class="flex-wrp" style="position: absolute;z-index:-1;flex-direction:row;top:{{750/wxx*60+jw+gg0+9*jh+6*gg0+2*gg1+1}}rpx;left:40rpx;margin-top:1rpx;margin-right:1rpx;">
+         <view wx:if="{{Selfdetermination==0}}">
+            <view wx:if="{{xuanzhongbool!=1}}">
+              <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="xuan">
+              标记
+              </view>
+          </view>
+          <view wx:if="{{xuanzhongbool==1}}">
+              <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:lightslategray;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="xuan">
+              标记
+              </view>
+          </view>
+         </view>
+         <view wx:if="{{Selfdetermination==1}}">
+            
+          
+              <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:lightslategray;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="xuan">
+              标记
+              </view>
+          
+         </view>
+        <view bindtap="num1" data-id="{{1}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">1</view>
+        <view bindtap="num1" data-id="{{2}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">2</view>
+        <view bindtap="num1" data-id="{{3}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">3</view>
+        <view bindtap="num1" data-id="{{4}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">4</view>
+        <view bindtap="num1" data-id="{{5}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">5</view>
+        
+        
+        
+        <view class="flex-wrp" style="flex-direction:column;top:{{(9*jh+6*gg0+2*gg1)/6+1}}rpx;left:0rpx;position: absolute;">
+        <view class="flex-wrp" style="flex-direction:row;">
+
+            <view wx:if="{{Selfdetermination==0}}">
+                  <view wx:if="{{xuanzhongbool!=4}}">
+                        <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="ts">
+                        提示
+                        </view>
+                  </view>
+                  <view wx:if="{{xuanzhongbool==4}}">
+                        <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="ts">
+                        提示
+                        </view>
+                  </view>
+            </view>
+            <view wx:if="{{Selfdetermination==1}}">
+                  
+                  
+                        <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:lightslategray;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="ts">
+                        提示
+                        </view>
+                  
+            </view>
+
+          <view bindtap="num1" data-id="{{6}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;">6</view>
+          <view bindtap="num1" data-id="{{7}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">7</view>
+          <view bindtap="num1" data-id="{{8}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">8</view>
+          <view bindtap="num1" data-id="{{9}}" style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:2rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx">9</view>
+
+          <view wx:if="{{xuanzhongbool!=3}}">
+              <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="xpc">
+              清除
+              </view>
+          </view>
+          <view wx:if="{{xuanzhongbool==3}}">
+              <view style="width:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx;position: relative;left:0rpx;background:white;text-align:center;margin-right:1rpx;line-height:{{(9*jh+6*gg0+2*gg1)/6-1}}rpx" bindtap="xpc">
+              清除
+              </view>
+          </view>
+          </view>  
+          </view>  
+</view>
+
+<button style="position:relative;z-index:-1;top:{{750/wxx*60+jw+gg0+9*jh+6*gg0+2*gg1+((9*jh+6*gg0+2*gg1)/6*2-(50))}}rpx;" bindtap="determine" wx:if="{{Selfdetermination==1}}">确定</button>
+  <!--工具栏-->
+  <!--
+   <view class="flex-wrp" style="flex-direction:row;bottom:{{750/wxx*120}}rpx;left:190rpx;position: absolute;">
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:0rpx;" bindtap="xuan">
+          <view wx:if="{{xuanzhongbool!=1}}">
+              <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/xuan.png"/>
+          </view>
+          <view wx:if="{{xuanzhongbool==1}}">
+              <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/xuan1.png"/>
+          </view>
+        </view>
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:30rpx;" bindtap="xpc">
+          <view wx:if="{{xuanzhongbool!=2}}">
+                <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/xpc.png"/>
+          </view>
+          <view wx:if="{{xuanzhongbool==2}}">
+                <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/xpc1.png"/>
+          </view>
+        </view>
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:60rpx;" bindtap="ch">
+          <view wx:if="{{xuanzhongbool!=3}}">
+              <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/ch.png"/>
+          </view>
+          <view wx:if="{{xuanzhongbool==3}}">
+              <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/ch1.png"/>
+          </view>
+        </view>
+        <view style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;left:90rpx;" bindtap="ts">
+          <view wx:if="{{xuanzhongbool!=4}}">
+              <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/ts.png"/>
+          </view>
+          <view wx:if="{{xuanzhongbool==4}}">
+              <image style="width:{{imgw}}rpx;height:{{imgw}}rpx;position: relative;" src="../../img/ts1.png"/>
+          </view>
+        </view>
+  </view>
+ 
+  <!--数据池-->
+  <!--
+   <view class="flex-wrp;" style="flex-direction:row;bottom:{{750/wxx*80}}rpx;left:150rpx;position: absolute;">
+        <view bindtap="num1" data-id="{{1}}" style="left:60rpx;position: relative;">1</view>
+        <view bindtap="num2" data-id="{{2}}" style="left:70rpx;position: relative;">2</view>
+        <view bindtap="num3" data-id="{{3}}" style="left:80rpx;position: relative;">3</view>
+        <view bindtap="num4" data-id="{{4}}" style="left:90rpx;position: relative;">4</view>
+        <view bindtap="num5" data-id="{{5}}" style="left:100rpx;position: relative;">5</view>
+        <view bindtap="num6" data-id="{{6}}" style="left:110rpx;position: relative;">6</view>
+        <view bindtap="num7" data-id="{{7}}" style="left:120rpx;position: relative;">7</view>
+        <view bindtap="num8" data-id="{{8}}" style="left:130rpx;position: relative;">8</view>
+        <view bindtap="num9" data-id="{{9}}" style="left:140rpx;position: relative;">9</view>
+  </view>
+ -->
+
+
+</view>

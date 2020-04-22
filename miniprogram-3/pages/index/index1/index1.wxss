@@ -1,0 +1,17 @@
+@import "../../../lib/weui.wxss";
+.view0{position: relative;top: 0px;left: 0px;}
+.bc_green { height: 50px;position: relative;left: 0px;top: 0px;}
+.bc_red { height: 50px;position: relative;left: 0px;top: 0px;}
+.bc_blue {height: 50px;position: relative;left: 0px;top: 0px;}
+.td {line-height:50px;}
+.flex-wrp {display: flex;}
+.bc_blue1 {background:white; height: 50px;position: relative;top: 0px;}
+.show {display: block;}
+.hid {display: none;}
+
+.jiugg{left:40rpx;position: absolute;}
+.jiubuju{position: relative;}
+
+.row{flex-direction:row;display: flex;}
+.column{flex-direction:column;display: flex;}
+.backcolor{background-color: black;z-index: -5;}
